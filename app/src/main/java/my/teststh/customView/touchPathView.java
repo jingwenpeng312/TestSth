@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -49,8 +48,6 @@ public class touchPathView extends SurfaceView implements SurfaceHolder.Callback
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        path = new Path();
-        path.moveTo(0, 200);
     }
 
     @Override
@@ -70,31 +67,19 @@ public class touchPathView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private void draw() {
-        try {
-            mCanvas = mHolder.lockCanvas();
-            if (!isClear) {
-                mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-                mCanvas.drawPaint(mPaint);
-                mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
-
-                mCanvas.drawColor(Color.WHITE);
-                mPaint.setStyle(Paint.Style.STROKE);
-                mPaint.setColor(Color.BLUE);
-                mPaint.setStrokeWidth(10);
-                mCanvas.drawPath(path, mPaint);
-            } else {
-                mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-                mCanvas.drawPaint(mPaint);
-                mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
-                mCanvas.drawColor(Color.WHITE);
-                path.moveTo(0, 200);
-            }
-        } catch (Exception e) {
-
-        } finally {
-            if (mCanvas != null) {
-                mHolder.unlockCanvasAndPost(mCanvas);
-            }
+        mCanvas = mHolder.lockCanvas();
+        if (!isClear) {
+            mCanvas.drawColor(Color.WHITE);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setColor(Color.BLUE);
+            mPaint.setStrokeWidth(10);
+            mCanvas.drawPath(path, mPaint);
+        } else {
+            mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            mCanvas.drawColor(Color.WHITE);
+        }
+        if (mCanvas != null) {
+            mHolder.unlockCanvasAndPost(mCanvas);
         }
     }
 
@@ -105,6 +90,7 @@ public class touchPathView extends SurfaceView implements SurfaceHolder.Callback
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 isClear = false;
+                path = new Path();
                 path.moveTo(x, y);
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -112,6 +98,7 @@ public class touchPathView extends SurfaceView implements SurfaceHolder.Callback
                 break;
             case MotionEvent.ACTION_UP:
                 isClear = true;
+                path.reset();
                 break;
         }
         return true;
