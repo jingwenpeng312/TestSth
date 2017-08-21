@@ -10,7 +10,7 @@ import my.teststh.R;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button testSurfaceView;
+    Button testSurfaceView1, testSurfaceView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +20,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        testSurfaceView = (Button) findViewById(R.id.test_surfaceview);
-        testSurfaceView.setOnClickListener(new View.OnClickListener() {
+        testSurfaceView1 = (Button) findViewById(R.id.test_surfaceview);
+        testSurfaceView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, SinViewActivty.class);
+                startActivity(intent);
+            }
+        });
+        testSurfaceView2 = (Button) findViewById(R.id.test_surfaceview2);
+        testSurfaceView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, TouchPathActivity.class);
                 startActivity(intent);
             }
         });
