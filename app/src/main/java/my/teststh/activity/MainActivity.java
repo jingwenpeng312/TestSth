@@ -11,6 +11,8 @@ import my.teststh.R;
 
 public class MainActivity extends AppCompatActivity {
     Button testSurfaceView1, testSurfaceView2;
+    Button shortCutView;
+    Button tessView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,27 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, TouchPathActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        shortCutView = (Button) findViewById(R.id.test_shortcut);
+        shortCutView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, ShortCutBadgerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        tessView = (Button) findViewById(R.id.test_tess);
+        tessView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, TessViewActivity.class);
                 startActivity(intent);
             }
         });
