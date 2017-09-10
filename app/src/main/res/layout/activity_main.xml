@@ -69,7 +69,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/holo_blue_light"
-                android:text="Test ShortCutBadger"
+                android:text="Test TESS-TWO"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
     </LinearLayout>
